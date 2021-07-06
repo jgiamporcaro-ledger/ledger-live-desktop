@@ -1,5 +1,6 @@
 // @flow
 
+import { BigNumber } from "bignumber.js";
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
@@ -78,7 +79,8 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
     unlockingBalance: _unlockingBalance,
     unlockedBalance: _unlockedBalance,
   } = polkadotResources;
-  const { minimumBondBalance: _minimumBondBalance } = usePolkadotPreloadData();
+  const preloaded = usePolkadotPreloadData();
+  const minimumBondBalance = BigNumber(preloaded.minimumBondBalance);
   const hasMinBondBalance = hasMinimumBondBalance(account);
 
   const unit = getAccountUnit(account);
@@ -112,7 +114,7 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
   );
 
   const unlockedBalance = formatCurrencyUnit(unit, _unlockedBalance, formatConfig);
-  const minimumBondBalance = formatCurrencyUnit(unit, _minimumBondBalance, {
+  const minimumBondBalanceStr = formatCurrencyUnit(unit, minimumBondBalance, {
     ...formatConfig,
     discreet: false,
   });
@@ -141,7 +143,7 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
               ) : (
                 <Trans
                   i18nKey="polkadot.bondedBalanceBelowMinimum"
-                  values={{ minimumBondBalance: minimumBondBalance }}
+                  values={{ minimumBondBalance: minimumBondBalanceStr }}
                 />
               )
             }
