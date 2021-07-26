@@ -203,6 +203,10 @@
     "disconnectButton": "Disconnect"
   },
   "swap2": {
+    "tabs": {
+      "exchange": "Exchange",
+      "history": "History"
+    },
     "form": {
       "details": {
         "label": {
